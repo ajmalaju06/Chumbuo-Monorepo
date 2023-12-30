@@ -1,0 +1,28 @@
+GET http://localhost:3001/categories
+
+###
+GET http://localhost:3001/categories/6575dbe5eff96617c00022a8
+
+###
+POST http://localhost:3001/categories
+Content-Type: application/json
+
+{
+    "name":"Travel"
+}
+
+### 
+DELETE http://localhost:3001/categories/65786168a4a71ea9c0a1b12e
+
+
+### 
+GET  http://localhost:3001/blogs
+
+###
+POST http://localhost:3001/login
+Content-Type: application/json
+
+{
+    "emailId":"ajmalaju06@gmail.com",
+    "password":"123456"
+}
