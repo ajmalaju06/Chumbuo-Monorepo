@@ -54,7 +54,7 @@ const SidePannel = () => {
         fontFamily={"enjelina"}
         pr={2}
       >
-        {isSidePannelOpen ? "Azhar" : "A"}
+        {isSidePannelOpen ? "Chumbuo" : "C"}
       </Text>
 
       <SidePannelprofile isPannelOpen={isSidePannelOpen} />
