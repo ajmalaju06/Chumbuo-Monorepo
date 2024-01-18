@@ -1,0 +1,3 @@
+.parentContainer:hover .arrows {
+  transform: scale(1.1);
+}

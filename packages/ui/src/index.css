@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+
+html {
+}
+body {
+  height: 100vh;
+  /* overflow: hidden !important; */
+}
+
+#root {
+  height: 100%;
+  /* overflow: hidden !important  ; */
+}
+
+* {
+  font-family: "Roboto", sans-serif !important;
+}
+
+@font-face {
+  font-family: "enjelina";
+  src: url("./assets/fonts/Enjelina.ttf") format("truetype");
+  /* Additional font formats and settings can be added */
+}
+
+@font-face {
+  font-family: "Lustria";
+  src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap")
+    format("truetype");
+  /* Additional font formats and settings can be added */
+}
