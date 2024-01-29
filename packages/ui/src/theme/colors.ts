@@ -4,6 +4,7 @@ export const colors = {
   green: "#44a33d",
   red: "#dc3030",
   gold: "#be9656",
+  textColor: "#222222",
 };
 
 export const shadows = {
@@ -16,4 +17,5 @@ export const shadows = {
 
 export const border = {
   headerMenuBorder: "1px solid #80808033",
+  boxBorderColor: "1px solid #e1e1e1",
 };

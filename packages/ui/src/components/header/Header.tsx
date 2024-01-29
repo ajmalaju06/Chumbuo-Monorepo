@@ -20,6 +20,7 @@ const Header = () => {
       flexDirection={"column"}
       justifyContent={"center"}
       zIndex={20}
+      boxShadow={"md"}
     >
       <Text
         w="full"

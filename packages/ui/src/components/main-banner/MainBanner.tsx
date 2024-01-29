@@ -85,6 +85,7 @@ const MainBanner = () => {
                   fontSize={"2xl"}
                   fontWeight={"500"}
                   fontFamily={"Lustria !important"}
+                  letterSpacing={"1px"}
                 >
                   {item.name}
                 </Text>

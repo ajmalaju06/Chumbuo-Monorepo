@@ -22,9 +22,12 @@ const HeaderMenu = () => {
             <ListItem
               key={item.id}
               _hover={{ color: colors.gold }}
-              fontWeight={"400"}
+              fontWeight={"600"}
+              fontSize={"sm"}
               transition={"0.3s ease-in-out"}
               cursor={"pointer"}
+              color={colors.textColor}
+              letterSpacing={"1px"}
             >
               {item.name}
             </ListItem>

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Lustria&display=swap");
 
 html {
 }
@@ -13,7 +13,7 @@ body {
 }
 
 * {
-  font-family: "Roboto", sans-serif !important;
+  font-family: "Lato", sans-serif !important;
 }
 
 @font-face {
@@ -23,7 +23,7 @@ body {
 }
 
 @font-face {
-  font-family: "Lustria";
+  font-family: "Lustria", serif;
   src: url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700;900&display=swap")
     format("truetype");
   /* Additional font formats and settings can be added */
