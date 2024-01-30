@@ -22,7 +22,7 @@ const BlogListItem = () => {
         >
           <Text
             textAlign={"center"}
-            fontSize={"xl"}
+            fontSize={"lg"}
             fontFamily={"Lustria !important"}
             letterSpacing={"1px"}
           >
@@ -81,4 +81,4 @@ const BlogListItem = () => {
   );
 };
 
-export default BlogListItem;
+export default React.memo(BlogListItem);

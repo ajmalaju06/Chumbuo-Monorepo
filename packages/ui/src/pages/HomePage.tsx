@@ -5,6 +5,7 @@ import MainBanner from "../components/main-banner/MainBanner";
 
 import LeftPanel from "../components/left-side-panel/LeftPanel";
 import RightPanel from "../components/right-side-panel/RightPanel";
+import Footer from "../components/footer/Footer";
 
 const HomePage = () => {
   return (
@@ -22,8 +23,9 @@ const HomePage = () => {
         <LeftPanel />
         <RightPanel />
       </Box>
+      <Footer />
     </Box>
   );
 };
 
-export default HomePage;
+export default React.memo(HomePage);

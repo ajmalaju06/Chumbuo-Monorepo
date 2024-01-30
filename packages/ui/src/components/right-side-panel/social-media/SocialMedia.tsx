@@ -53,4 +53,4 @@ const SocialMedia = () => {
   );
 };
 
-export default SocialMedia;
+export default React.memo(SocialMedia);

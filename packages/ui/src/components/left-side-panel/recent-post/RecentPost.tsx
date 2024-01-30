@@ -71,4 +71,4 @@ const RecentPost = () => {
   );
 };
 
-export default RecentPost;
+export default React.memo(RecentPost);

@@ -11,7 +11,7 @@ const RightPanel = () => {
       w={{ base: "full", lg: "25%" }}
       display={"flex"}
       flexDirection={"column"}
-      gap={"3rem"}
+      gap={"2.5rem"}
     >
       <AboutMe />
       <Subscribe />
@@ -21,4 +21,4 @@ const RightPanel = () => {
   );
 };
 
-export default RightPanel;
+export default React.memo(RightPanel);
