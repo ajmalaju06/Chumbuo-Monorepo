@@ -12,6 +12,17 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/:categoryId", async (req, res) => {
+  try {
+    const categoryId = req.params.categoryId;
+    console.log(categoryId);
+    const allCategories = await BlogsModel.find({ categoryId: categoryId });
+    res.json(allCategories);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Creating new blog
 router.post("/", async (req, res) => {
   const blogDetails = new BlogsModel({
