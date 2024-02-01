@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { border, colors } from "../../../theme/colors";
+import { useGetAllCategories } from "../../../queries/useCategoryQuery";
+import { CategoryListProps } from "../../../model/Category.model";
 
 const Categories = () => {
+  const [categoryList, setCategoryList] = useState<CategoryListProps[]>([]);
+  const { data } = useGetAllCategories();
+
+  useEffect(() => {
+    if (data) {
+      setCategoryList(data);
+      console.log(data);
+    }
+  }, [data]);
+
   return (
     <Box border={border.boxBorderColor} px={4} py={4}>
       <Text
@@ -25,18 +37,20 @@ const Categories = () => {
         mb={"1rem"}
         listStyleType={"none"}
         mx={0}
+        maxH={"25rem"}
+        overflowY={"auto"}
       >
-        {[1, 1, 1, 1, 1, 1, 1, 1, 1].map((item, index) => {
+        {categoryList.map((item, index) => {
           return (
             <ListItem
-              key={item}
+              key={item._id}
               cursor={"pointer"}
               borderTop={index === 0 ? "0px" : border.boxBorderColor}
               py={1}
               _hover={{ color: "gray.400" }}
               transition={"0.3s ease-in-out"}
             >
-              <Text>abcd</Text>
+              <Text fontSize={"xs"}>{item.name}</Text>
             </ListItem>
           );
         })}

@@ -6,10 +6,6 @@ import useStore from "../../provider/store/useStore";
 const Header = () => {
   const { scrollPosition } = useStore();
 
-  useEffect(() => {
-    console.log(scrollPosition);
-  }, [scrollPosition]);
-
   return (
     <Box
       bg="white"

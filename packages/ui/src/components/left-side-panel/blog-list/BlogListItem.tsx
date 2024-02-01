@@ -2,8 +2,13 @@ import React from "react";
 import { Box, GridItem, Image, Text } from "@chakra-ui/react";
 import { colors } from "../../../theme/colors";
 import BannerImage1 from "../../../assets/images/banner-image-5.jpg";
+import { BlogListItemProps } from "../../../model/BlogList.model";
 
-const BlogListItem = () => {
+interface BlogListItemProp {
+  blogListDetails: BlogListItemProps;
+}
+
+const BlogListItem: React.FC<BlogListItemProp> = ({ blogListDetails }) => {
   return (
     <GridItem w="100%">
       <Box display={"flex"} flexDirection={"column"} gap={5}>
@@ -25,8 +30,9 @@ const BlogListItem = () => {
             fontSize={"lg"}
             fontFamily={"Lustria !important"}
             letterSpacing={"1px"}
+            color={colors.textColor}
           >
-            BEAUTY OF NATURE
+            {blogListDetails.heading}
           </Text>
           <Text
             w={"fit-content"}
@@ -58,10 +64,7 @@ const BlogListItem = () => {
           mt={5}
           textAlign={"left"}
         >
-          Lorem ipsum dosectetur adipisicing elit, sed do.Lorem ipsum dolor sit
-          amet, consectetur Nulla fringilla purus at leo dignissim congue.
-          Mauris elementum accumsan leo vel tempor. Sit amet cursus nisl
-          aliquam. …
+          {blogListDetails.description}
         </Text>
         <Text
           fontSize={"xs"}

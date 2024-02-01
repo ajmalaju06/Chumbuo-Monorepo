@@ -16,6 +16,7 @@ const HeaderMenu = () => {
         gap={14}
         fontSize={"sm"}
         listStyleType={"none"}
+        py={"1px"}
       >
         {headerMenuItems.map((item) => {
           return (
@@ -23,7 +24,7 @@ const HeaderMenu = () => {
               key={item.id}
               _hover={{ color: colors.gold }}
               fontWeight={"600"}
-              fontSize={"sm"}
+              fontSize={"12px"}
               transition={"0.3s ease-in-out"}
               cursor={"pointer"}
               color={colors.textColor}

@@ -4,7 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "pnpm run dev:ui & pnpm run dev:server & pnpm run dev:admin",
+    "dev:ui": "pnpm --filter ./packages/ui run dev",
+    "dev:server": "pnpm --filter ./packages/server run dev",
+    "dev:admin": "pnpm --filter ./packages/admin run dev"
   },
   "keywords": [],
   "author": "",

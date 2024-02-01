@@ -2,18 +2,27 @@ import React from "react";
 import { Box, Button, Input, Text } from "@chakra-ui/react";
 import { colors } from "../../../theme/colors";
 
-const Subscribe = () => {
+interface SubscribeProps {
+  isFooter?: boolean;
+}
+
+const Subscribe: React.FC<SubscribeProps> = ({ isFooter }) => {
   return (
-    <Box bg={colors.textColor} px={4} py={7}>
+    <Box
+      bg={colors.textColor}
+      px={4}
+      py={isFooter ? 0 : 7}
+      flex={isFooter ? 1 : 0}
+    >
       <Text
-        color={"white"}
+        color={isFooter ? colors.footerTextColor : "white"}
         fontSize={"12px"}
-        textAlign={"center"}
+        textAlign={isFooter ? "left" : "center"}
         fontWeight={"600"}
         letterSpacing={"2px"}
-        mt={2}
+        mt={isFooter ? 0 : 2}
       >
-        SUBSCRIBE TO MY NEWSLETTER
+        {isFooter ? "SUBSCRIBE" : "SUBSCRIBE TO MY NEWSLETTER"}
       </Text>
 
       <Box display={"flex"} flexDirection={"column"} gap={2} mt={6} mb={4}>

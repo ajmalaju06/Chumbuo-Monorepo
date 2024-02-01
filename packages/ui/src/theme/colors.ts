@@ -5,6 +5,7 @@ export const colors = {
   red: "#dc3030",
   gold: "#be9656",
   textColor: "#222222",
+  footerTextColor: "#999999",
 };
 
 export const shadows = {

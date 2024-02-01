@@ -12,22 +12,22 @@ import { BsInstagram } from "react-icons/bs";
 export const headerMenuItems = [
   {
     id: "headerMenu1",
-    name: "Home",
+    name: "HOME",
     path: "",
   },
   {
     id: "headerMenu2",
-    name: "Blogs",
+    name: "BLOGS",
     path: "/categories",
   },
   {
     id: "headerMenu3",
-    name: "Contact",
+    name: "CONTACT",
     path: "/blogs/blog-list",
   },
   {
     id: "headerMenu4",
-    name: "About Me",
+    name: "ABOUT ME",
     path: "/blogs/blog-list",
   },
 ];
