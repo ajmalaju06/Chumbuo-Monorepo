@@ -38,7 +38,7 @@ const BlogListItem: React.FC<BlogListItemProps> = ({ blogItem, index }) => {
         <Text fontWeight={"semibold"} fontSize={"lg"}>
           {blogItem.heading}
         </Text>
-        <Text fontSize={"sm"} color={"gray.500"}>
+        <Text fontSize={"sm"} color={"gray.500"} noOfLines={2}>
           {blogItem.description}
         </Text>
 
