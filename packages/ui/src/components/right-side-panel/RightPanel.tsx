@@ -1,11 +1,16 @@
 import React from "react";
-import { Box } from "@chakra-ui/react";
+import { Box, useBreakpointValue } from "@chakra-ui/react";
 import AboutMe from "./about-me/AboutMe";
 import Subscribe from "./subscribe/Subscribe";
 import SocialMedia from "./social-media/SocialMedia";
 import Categories from "./categories/Categories";
 
 const RightPanel = () => {
+  const CategoryResponsive = useBreakpointValue({
+    base: null,
+    lg: <Categories />,
+  });
+
   return (
     <Box
       w={{ base: "full", lg: "25%" }}
@@ -16,7 +21,7 @@ const RightPanel = () => {
       <AboutMe />
       <Subscribe />
       <SocialMedia />
-      <Categories />
+      {CategoryResponsive}
     </Box>
   );
 };

@@ -6,3 +6,14 @@ export interface BlogListItemProps {
   content: string;
   categoryId: string;
 }
+
+export interface BlogListDetailsProps {
+  categoryData?: BlogListItemProps[];
+  isNextPageAvailable?: boolean;
+  isPrevPageAvailable?: boolean;
+}
+
+export interface getAllBlogsProps {
+  categoryId: string;
+  pageNumber?: number;
+}

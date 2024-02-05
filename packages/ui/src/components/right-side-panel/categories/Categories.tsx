@@ -1,19 +1,30 @@
 import React, { useEffect, useState } from "react";
-import { Box, ListItem, Text, UnorderedList } from "@chakra-ui/react";
+import { Box, Icon, ListItem, Text, UnorderedList } from "@chakra-ui/react";
 import { border, colors } from "../../../theme/colors";
 import { useGetAllCategories } from "../../../queries/useCategoryQuery";
 import { CategoryListProps } from "../../../model/Category.model";
+import { IoClose } from "react-icons/io5";
+import useStore from "../../../provider/store/useStore";
+import { useGetAllBlogsByCategoryId } from "../../../queries/useBlogsQuery";
 
 const Categories = () => {
   const [categoryList, setCategoryList] = useState<CategoryListProps[]>([]);
+  const { selectedCategoryId, setSelectedCategoryId, setBlogList } = useStore();
+
   const { data } = useGetAllCategories();
+  const { data: blogData, mutate } = useGetAllBlogsByCategoryId();
 
   useEffect(() => {
     if (data) {
       setCategoryList(data);
-      console.log(data);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (blogData) {
+      setBlogList(blogData);
+    }
+  }, [blogData]);
 
   return (
     <Box border={border.boxBorderColor} px={4} py={4}>
@@ -47,10 +58,35 @@ const Categories = () => {
               cursor={"pointer"}
               borderTop={index === 0 ? "0px" : border.boxBorderColor}
               py={1}
-              _hover={{ color: "gray.400" }}
-              transition={"0.3s ease-in-out"}
             >
-              <Text fontSize={"xs"}>{item.name}</Text>
+              <Box
+                display={"flex"}
+                alignItems={"center"}
+                transition={"0.3s ease-in-out"}
+              >
+                <Text
+                  fontSize={"xs"}
+                  flex={1}
+                  _hover={{ color: "gray.400" }}
+                  onClick={() => {
+                    setSelectedCategoryId(item._id);
+                    mutate({ categoryId: item._id, pageNumber: 1 });
+                  }}
+                >
+                  {item.name}
+                </Text>
+                {selectedCategoryId === item._id ? (
+                  <Icon
+                    as={IoClose}
+                    fontSize={"sm"}
+                    cursor={"pointer"}
+                    onClick={() => {
+                      setSelectedCategoryId("");
+                      mutate({ categoryId: "", pageNumber: 1 });
+                    }}
+                  />
+                ) : null}
+              </Box>
             </ListItem>
           );
         })}

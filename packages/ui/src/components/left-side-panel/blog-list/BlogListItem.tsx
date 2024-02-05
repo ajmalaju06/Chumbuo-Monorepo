@@ -18,6 +18,7 @@ const BlogListItem: React.FC<BlogListItemProp> = ({ blogListDetails }) => {
           h={"20rem"}
           w={"full"}
           objectFit={"cover"}
+          boxShadow={"xl"}
         />
         <Box
           position={"relative"}
@@ -32,7 +33,7 @@ const BlogListItem: React.FC<BlogListItemProp> = ({ blogListDetails }) => {
             letterSpacing={"1px"}
             color={colors.textColor}
           >
-            {blogListDetails.heading}
+            {blogListDetails.heading.toUpperCase()}
           </Text>
           <Text
             w={"fit-content"}

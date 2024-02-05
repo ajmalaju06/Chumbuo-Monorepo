@@ -1,10 +1,15 @@
 import React from "react";
-import { Box, Text } from "@chakra-ui/react";
+import { Box, Text, useBreakpointValue } from "@chakra-ui/react";
 import RecentPost from "./recent-post/RecentPost";
 import BlogList from "./blog-list/BlogList";
 import { colors } from "../../theme/colors";
+import Categories from "../right-side-panel/categories/Categories";
 
 const LeftPanel = () => {
+  const CategoryResponsive = useBreakpointValue({
+    base: <Categories />,
+    lg: null,
+  });
   return (
     <Box
       w={{ base: "full", lg: "75%" }}
@@ -14,6 +19,7 @@ const LeftPanel = () => {
       px={{ base: "0px", lg: "1rem" }}
     >
       <RecentPost />
+      {CategoryResponsive}
 
       <Box
         position={"relative"}
