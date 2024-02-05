@@ -12,7 +12,49 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:categoryId", async (req, res) => {
+// Getting all blogs
+router.post("/searchByCategory/", async (req, res) => {
+  try {
+    const categoryId = req.body.categoryId;
+    const pageNumber = req.body.pageNumber;
+    const pageLimit = 6;
+
+    const startIndex = (pageNumber - 1) * pageLimit;
+    const endIndex = pageNumber * pageLimit;
+
+    const isNextPageAvailable =
+      endIndex < (await BlogsModel.countDocuments().exec());
+    const isPrevPageAvailable = startIndex > 0;
+
+    if (categoryId) {
+      const blogLists = await BlogsModel.find({ categoryId: categoryId });
+      const isNextPageAvailable = endIndex < blogLists.length;
+      const allBlogs = await BlogsModel.find({ categoryId: categoryId })
+        .limit(pageLimit)
+        .skip(startIndex)
+        .exec();
+      res.json({
+        categoryData: allBlogs,
+        isNextPageAvailable: isNextPageAvailable,
+        isPrevPageAvailable: isPrevPageAvailable,
+      });
+    } else {
+      const allBlogs = await BlogsModel.find()
+        .limit(pageLimit)
+        .skip(startIndex)
+        .exec();
+      res.json({
+        categoryData: allBlogs,
+        isNextPageAvailable: isNextPageAvailable,
+        isPrevPageAvailable: isPrevPageAvailable,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.post("/:categoryId", async (req, res) => {
   try {
     const categoryId = req.params.categoryId;
     console.log(categoryId);
