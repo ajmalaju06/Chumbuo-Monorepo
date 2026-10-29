@@ -1,33 +1,10 @@
 /**
- * Plain-string SVG builders for the brand marks. Used by the asset export
- * script and by image routes (favicons, OG) where React DOM isn't available.
- * The React components in components/brand render the same geometry.
+ * Plain-string SVG builders for the brand lockups, used by the asset export
+ * script. The leaf mark is raster artwork, so lockups embed it as an <image>
+ * (`markHref` — a data URI or URL); the wordmark stays vector.
+ * The React components in components/brand render the same layout.
  */
-import {
-  BLOOM_BASE,
-  BLOOM_LEAVES,
-  BLOOM_VIEWBOX,
-  BRAND,
-  TONES,
-  WORDMARK,
-  WORDMARK_PETAL,
-  type LogoTone,
-} from "./geometry";
-
-function bloomGroup(tone: LogoTone, gapWidth = 1.2) {
-  const t = TONES[tone];
-  const leaves = BLOOM_LEAVES.map((l) => {
-    const c = t.leaves[l.colour];
-    // Gap stroke first (painted under the fills) so leaves read as separate.
-    const gap = `<path d="${l.outline}" fill="none" stroke="${t.gap}" stroke-width="${gapWidth * 2}" stroke-linejoin="round"/>`;
-    const halves = `<path d="${l.left}" fill="${c.shade}"/><path d="${l.right}" fill="${c.lit}"/>`;
-    const outline = c.outline
-      ? `<path d="${l.outline}" fill="none" stroke="${c.outline}" stroke-width="0.9" stroke-linejoin="round"/>`
-      : "";
-    return `<g transform="rotate(${l.rotate})">${gap}${halves}${outline}</g>`;
-  }).join("");
-  return `<g transform="translate(${BLOOM_BASE.x} ${BLOOM_BASE.y})">${leaves}</g>`;
-}
+import { MARK_ASPECT, TONES, WORDMARK, WORDMARK_PETAL, type LogoTone } from "./geometry";
 
 function wordmarkGroup(tone: LogoTone) {
   const t = TONES[tone];
@@ -36,11 +13,10 @@ function wordmarkGroup(tone: LogoTone) {
 }
 
 const svg = (w: number, h: number, viewBox: string, body: string, title: string) =>
-  `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}" viewBox="${viewBox}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>`;
+  `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="${w}" height="${h}" viewBox="${viewBox}" role="img" aria-label="${title}"><title>${title}</title>${body}</svg>`;
 
-export function monogramSvg(tone: LogoTone = "light", size = 64) {
-  return svg(size, size, `0 0 ${BLOOM_VIEWBOX} ${BLOOM_VIEWBOX}`, bloomGroup(tone), "Chumbuo");
-}
+const image = (href: string, x: number, y: number, w: number, h: number) =>
+  `<image href="${href}" xlink:href="${href}" x="${x}" y="${y}" width="${w}" height="${h}" preserveAspectRatio="xMidYMid meet"/>`;
 
 export function wordmarkSvg(tone: LogoTone = "light") {
   const h = WORDMARK.bottom - WORDMARK.top;
@@ -54,51 +30,34 @@ export function wordmarkSvg(tone: LogoTone = "light") {
 }
 
 /** Mark left, wordmark right. */
-export function horizontalSvg(tone: LogoTone = "light") {
+export function horizontalSvg(markHref: string, tone: LogoTone = "light") {
   const h = WORDMARK.bottom - WORDMARK.top;
-  const markSize = h * 1.45;
-  const gap = h * 0.18;
-  const scale = markSize / BLOOM_VIEWBOX;
-  const markY = WORDMARK.top + (h - markSize) / 2 - h * 0.08;
-  const width = markSize + gap + WORDMARK.width;
+  const markH = h * 1.5;
+  const markW = markH * MARK_ASPECT;
+  const gap = h * 0.22;
+  const markY = WORDMARK.top + (h - markH) / 2 - h * 0.12;
+  const width = markW + gap + WORDMARK.width;
   const body =
-    `<g transform="translate(0 ${markY}) scale(${scale})">${bloomGroup(tone)}</g>` +
-    `<g transform="translate(${markSize + gap} 0)">${wordmarkGroup(tone)}</g>`;
-  return svg(
-    Math.ceil(width),
-    Math.ceil(markSize),
-    `0 ${markY} ${width} ${markSize}`,
-    body,
-    "Chumbuo",
-  );
+    image(markHref, 0, markY, markW, markH) +
+    `<g transform="translate(${markW + gap} 0)">${wordmarkGroup(tone)}</g>`;
+  return svg(Math.ceil(width), Math.ceil(markH), `0 ${markY} ${width} ${markH}`, body, "Chumbuo");
 }
 
 /** Mark centred above the wordmark, optional tagline beneath. */
-export function stackedSvg(tone: LogoTone = "light", tagline?: string) {
+export function stackedSvg(markHref: string, tone: LogoTone = "light", tagline?: string) {
   const h = WORDMARK.bottom - WORDMARK.top;
-  const markSize = h * 1.5;
-  const scale = markSize / BLOOM_VIEWBOX;
-  const gap = -h * 0.06;
+  const markH = h * 2.1;
+  const markW = markH * MARK_ASPECT;
+  const gap = h * 0.12;
   const taglineH = tagline ? 40 : 0;
   const width = WORDMARK.width;
-  const total = markSize + gap + h + taglineH;
+  const total = markH + gap + h + taglineH;
   const t = TONES[tone];
   const body =
-    `<g transform="translate(${(width - markSize) / 2} 0) scale(${scale})">${bloomGroup(tone)}</g>` +
-    `<g transform="translate(0 ${markSize + gap - WORDMARK.top})">${wordmarkGroup(tone)}</g>` +
+    image(markHref, (width - markW) / 2, 0, markW, markH) +
+    `<g transform="translate(0 ${markH + gap - WORDMARK.top})">${wordmarkGroup(tone)}</g>` +
     (tagline
       ? `<text x="${width / 2}" y="${total - 4}" text-anchor="middle" font-family="Jost, Helvetica, Arial, sans-serif" font-size="13" letter-spacing="4.5" fill="${t.ink}">${tagline.toUpperCase()}</text>`
       : "");
   return svg(Math.ceil(width), Math.ceil(total), `0 0 ${width} ${total}`, body, "Chumbuo");
-}
-
-/** Square app icon: bloom on a solid tile. */
-export function appIconSvg(tone: LogoTone = "light", size = 512, radius = 0.22) {
-  const bg = tone === "dark" ? BRAND.pine : BRAND.oatmeal;
-  const inset = BLOOM_VIEWBOX * 0.16;
-  const vb = BLOOM_VIEWBOX + inset * 2;
-  const body =
-    `<rect x="${-inset}" y="${-inset}" width="${vb}" height="${vb}" rx="${vb * radius}" fill="${bg}"/>` +
-    `<g transform="translate(1.5 -3)">${bloomGroup(tone, 1.4)}</g>`;
-  return svg(size, size, `${-inset} ${-inset} ${vb} ${vb}`, body, "Chumbuo");
 }

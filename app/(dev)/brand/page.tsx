@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { Logo, Monogram, Wordmark } from "@/components/brand/Logo";
+import { Logo, Mark, Wordmark } from "@/components/brand/Logo";
 import { ArrowLink, PillLink, Seal, Star } from "@/components/site/ornaments";
 import { contrastRatio } from "@/lib/brand/contrast";
 import { BRAND } from "@/lib/brand/geometry";
@@ -13,15 +13,18 @@ export const metadata: Metadata = {
 const TAGLINE = "Little moments. Lasting stories.";
 
 const DOWNLOADS = [
+  "chumbuo-mark.png",
+  "chumbuo-mark-512.png",
+  "chumbuo-horizontal-light.png",
+  "chumbuo-horizontal-dark.png",
   "chumbuo-horizontal-light.svg",
   "chumbuo-horizontal-dark.svg",
+  "chumbuo-stacked-light.png",
+  "chumbuo-stacked-dark.png",
   "chumbuo-stacked-light.svg",
   "chumbuo-stacked-dark.svg",
   "chumbuo-wordmark-light.svg",
   "chumbuo-wordmark-dark.svg",
-  "chumbuo-monogram-light.svg",
-  "chumbuo-monogram-dark.svg",
-  "chumbuo-app-icon.svg",
   "chumbuo-app-icon-512.png",
   "chumbuo-avatar-512.png",
 ];
@@ -63,12 +66,12 @@ export default function BrandPage() {
         </div>
       </Section>
 
-      <Section title="Monogram at small sizes">
+      <Section title="Mark at small sizes">
         <div className="flex flex-wrap items-end gap-10">
           {[16, 24, 32, 48, 96].map((s) => (
             <figure key={s} className="flex flex-col items-center gap-3">
-              <span style={{ width: s, height: s }} className="block">
-                <Monogram className="size-full" title={`Monogram at ${s}px`} />
+              <span style={{ height: s }} className="block">
+                <Mark className="h-full" sizes={`${s * 2}px`} title={`Mark at ${s}px`} />
               </span>
               <figcaption className="text-meta text-ink-muted">{s}px</figcaption>
             </figure>

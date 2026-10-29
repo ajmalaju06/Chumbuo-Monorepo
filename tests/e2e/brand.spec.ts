@@ -21,6 +21,6 @@ test("brand guide renders lockups, palette and downloads", async ({ page }) => {
 test("favicon and apple icon are served", async ({ page }) => {
   await page.goto("/");
   const icon = page.locator('link[rel="icon"]').first();
-  await expect(icon).toHaveAttribute("href", /icon/);
+  await expect(icon).toHaveAttribute("href", /icon\.png/);
   expect((await page.request.get("/apple-icon.png")).ok()).toBe(true);
 });
