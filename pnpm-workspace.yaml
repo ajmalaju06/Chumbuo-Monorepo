@@ -1,4 +1,3 @@
-packages:
-  - packages/admin
-  - packages/server
-  - packages/ui
+ignoredBuiltDependencies:
+  - sharp
+  - unrs-resolver

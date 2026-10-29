@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/*
+ * CHUMBUO design tokens.
+ * Three brand colours only: oatmeal (surface), pine (ink + dark bands),
+ * lilac (highlight + decoration). Lilac never carries body text — it fails
+ * contrast on oatmeal — so it's reserved for display type, marks and fills.
+ */
+@theme {
+  --color-oatmeal: #e8dcc6;
+  --color-pine: #1f3b2e;
+  --color-lilac: #cbb3e8;
+
+  /* Derived tints — same hues, never new ones. */
+  --color-paper: #f3ecdf; /* raised cards on oatmeal */
+  --color-oatmeal-deep: #ddcfb5; /* hover/pressed on oatmeal */
+  --color-pine-soft: #2c4d3d; /* hover on pine */
+  --color-lilac-deep: #a98fcf; /* lilac on pine where more weight is needed */
+  --color-ink: #1f3b2e;
+  --color-ink-muted: color-mix(in oklab, #1f3b2e 72%, #e8dcc6);
+  --color-rule: color-mix(in oklab, #1f3b2e 22%, transparent);
+
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
+  --font-sans: var(--font-jost), "Jost", ui-sans-serif, system-ui, sans-serif;
+
+  /* Fluid type scale (min @ 360px → max @ 1600px). */
+  --text-display: clamp(3.75rem, 2rem + 9.5vw, 12rem);
+  --text-display--line-height: 0.86;
+  --text-display--letter-spacing: -0.035em;
+  --text-h1: clamp(2.75rem, 1.9rem + 4.4vw, 6rem);
+  --text-h1--line-height: 0.95;
+  --text-h1--letter-spacing: -0.02em;
+  --text-h2: clamp(2.125rem, 1.6rem + 2.6vw, 4rem);
+  --text-h2--line-height: 1;
+  --text-h2--letter-spacing: -0.015em;
+  --text-h3: clamp(1.5rem, 1.3rem + 1vw, 2.125rem);
+  --text-h3--line-height: 1.1;
+  --text-lead: clamp(1.125rem, 1.05rem + 0.35vw, 1.375rem);
+  --text-lead--line-height: 1.55;
+  --text-body: 1.0625rem;
+  --text-body--line-height: 1.75;
+  --text-meta: 0.6875rem;
+  --text-meta--letter-spacing: 0.22em;
+
+  --ease-editorial: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-curtain: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --container-prose: 40rem;
+  --container-page: 96rem;
+}
+
+@layer base {
+  :root {
+    --gutter: clamp(1rem, 0.4rem + 3vw, 3.5rem);
+    --logo-gap: var(--color-oatmeal);
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-oatmeal);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-lilac);
+    color: var(--color-pine);
+  }
+
+  :focus-visible {
+    outline: 2px solid currentColor;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Pine surfaces: flip ink and the logo's petal gap. */
+  .surface-pine {
+    background: var(--color-pine);
+    color: var(--color-oatmeal);
+    --logo-gap: var(--color-pine);
+    --color-rule: color-mix(in oklab, #e8dcc6 24%, transparent);
+    --color-ink-muted: color-mix(in oklab, #e8dcc6 74%, #1f3b2e);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  /* Small metadata: dates, categories, captions. */
+  .text-meta {
+    font-family: var(--font-sans);
+    font-size: var(--text-meta);
+    letter-spacing: var(--text-meta--letter-spacing);
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  .rule {
+    border-color: var(--color-rule);
+  }
+}
+
+@utility px-gutter {
+  padding-inline: var(--gutter);
+}
