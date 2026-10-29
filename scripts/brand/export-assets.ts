@@ -28,7 +28,7 @@ const svgs: Record<string, string> = {
   "chumbuo-wordmark-dark.svg": wordmarkSvg("dark"),
   "chumbuo-monogram-light.svg": monogramSvg("light"),
   "chumbuo-monogram-dark.svg": monogramSvg("dark"),
-  "chumbuo-app-icon.svg": appIconSvg("dark"),
+  "chumbuo-app-icon.svg": appIconSvg("light"),
 };
 
 async function main() {
@@ -42,14 +42,14 @@ async function main() {
   // Social avatar: square, no rounding — platforms crop to circles themselves.
   writeFileSync(
     join(BRAND_DIR, "chumbuo-avatar-512.png"),
-    await png(appIconSvg("dark", 512, 0), 512),
+    await png(appIconSvg("light", 512, 0), 512),
   );
-  writeFileSync(join(BRAND_DIR, "chumbuo-app-icon-512.png"), await png(appIconSvg("dark"), 512));
-  writeFileSync(join(BRAND_DIR, "chumbuo-app-icon-192.png"), await png(appIconSvg("dark"), 192));
+  writeFileSync(join(BRAND_DIR, "chumbuo-app-icon-512.png"), await png(appIconSvg("light"), 512));
+  writeFileSync(join(BRAND_DIR, "chumbuo-app-icon-192.png"), await png(appIconSvg("light"), 192));
 
   // Next.js file-convention icons.
-  writeFileSync(join(ROOT, "app/icon.svg"), appIconSvg("dark", 32));
-  writeFileSync(join(ROOT, "app/apple-icon.png"), await png(appIconSvg("dark", 180, 0), 180));
+  writeFileSync(join(ROOT, "app/icon.svg"), appIconSvg("light", 32));
+  writeFileSync(join(ROOT, "app/apple-icon.png"), await png(appIconSvg("light", 180, 0), 180));
 
   console.log(`exported ${Object.keys(svgs).length} SVGs + PNGs to public/brand, icons to app/`);
 }

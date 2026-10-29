@@ -48,17 +48,17 @@ export default function BrandPage() {
 
       <Section title="Lockups">
         <div className="grid gap-px overflow-hidden rounded-sm md:grid-cols-2">
-          <div className="grid min-h-72 place-items-center bg-paper p-10 text-[3.5rem]">
+          <div className="grid min-h-72 place-items-center bg-paper p-10 text-[3.5rem] [--logo-gap:var(--color-paper)]">
             <Logo />
           </div>
           <div className="surface-pine grid min-h-72 place-items-center p-10 text-[3.5rem]">
-            <Logo />
+            <Logo tone="dark" />
           </div>
-          <div className="grid min-h-96 place-items-center bg-paper p-10 text-[4.5rem]">
+          <div className="grid min-h-96 place-items-center bg-paper p-10 text-[4.5rem] [--logo-gap:var(--color-paper)]">
             <Logo variant="stacked" tagline={TAGLINE} />
           </div>
           <div className="surface-pine grid min-h-96 place-items-center p-10 text-[4.5rem]">
-            <Logo variant="stacked" tagline={TAGLINE} />
+            <Logo tone="dark" variant="stacked" tagline={TAGLINE} />
           </div>
         </div>
       </Section>

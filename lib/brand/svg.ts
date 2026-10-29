@@ -5,7 +5,7 @@
  */
 import {
   BLOOM_BASE,
-  BLOOM_PETALS,
+  BLOOM_LEAVES,
   BLOOM_VIEWBOX,
   BRAND,
   TONES,
@@ -14,20 +14,25 @@ import {
   type LogoTone,
 } from "./geometry";
 
-function bloomGroup(tone: LogoTone, gapWidth = 1.6) {
+function bloomGroup(tone: LogoTone, gapWidth = 1.2) {
   const t = TONES[tone];
-  const petals = BLOOM_PETALS.map((p) => {
-    const fill = p.role === "outer" ? t.outer : t.bloom;
-    const opacity = p.role === "outer" ? ' fill-opacity="0.9"' : "";
-    return `<path d="${p.d}" transform="rotate(${p.rotate})" fill="${fill}"${opacity} stroke="${t.gap}" stroke-width="${gapWidth}" stroke-linejoin="round"/>`;
+  const leaves = BLOOM_LEAVES.map((l) => {
+    const c = t.leaves[l.colour];
+    // Gap stroke first (painted under the fills) so leaves read as separate.
+    const gap = `<path d="${l.outline}" fill="none" stroke="${t.gap}" stroke-width="${gapWidth * 2}" stroke-linejoin="round"/>`;
+    const halves = `<path d="${l.left}" fill="${c.shade}"/><path d="${l.right}" fill="${c.lit}"/>`;
+    const outline = c.outline
+      ? `<path d="${l.outline}" fill="none" stroke="${c.outline}" stroke-width="0.9" stroke-linejoin="round"/>`
+      : "";
+    return `<g transform="rotate(${l.rotate})">${gap}${halves}${outline}</g>`;
   }).join("");
-  return `<g transform="translate(${BLOOM_BASE.x} ${BLOOM_BASE.y})">${petals}</g>`;
+  return `<g transform="translate(${BLOOM_BASE.x} ${BLOOM_BASE.y})">${leaves}</g>`;
 }
 
 function wordmarkGroup(tone: LogoTone) {
   const t = TONES[tone];
   const p = WORDMARK_PETAL;
-  return `<path d="${WORDMARK.d}" fill="${t.ink}"/><path d="${p.d}" transform="translate(${p.x} ${p.y})" fill="${t.bloom}"/>`;
+  return `<path d="${WORDMARK.d}" fill="${t.ink}"/><path d="${p.d}" transform="translate(${p.x} ${p.y})" fill="${t.accent}"/>`;
 }
 
 const svg = (w: number, h: number, viewBox: string, body: string, title: string) =>
@@ -51,7 +56,7 @@ export function wordmarkSvg(tone: LogoTone = "light") {
 /** Mark left, wordmark right. */
 export function horizontalSvg(tone: LogoTone = "light") {
   const h = WORDMARK.bottom - WORDMARK.top;
-  const markSize = h * 1.25;
+  const markSize = h * 1.45;
   const gap = h * 0.18;
   const scale = markSize / BLOOM_VIEWBOX;
   const markY = WORDMARK.top + (h - markSize) / 2 - h * 0.08;
@@ -88,12 +93,12 @@ export function stackedSvg(tone: LogoTone = "light", tagline?: string) {
 }
 
 /** Square app icon: bloom on a solid tile. */
-export function appIconSvg(tone: LogoTone = "dark", size = 512, radius = 0.22) {
+export function appIconSvg(tone: LogoTone = "light", size = 512, radius = 0.22) {
   const bg = tone === "dark" ? BRAND.pine : BRAND.oatmeal;
   const inset = BLOOM_VIEWBOX * 0.16;
   const vb = BLOOM_VIEWBOX + inset * 2;
   const body =
     `<rect x="${-inset}" y="${-inset}" width="${vb}" height="${vb}" rx="${vb * radius}" fill="${bg}"/>` +
-    `<g transform="translate(0 -2)">${bloomGroup(tone, 2)}</g>`;
+    `<g transform="translate(1.5 -3)">${bloomGroup(tone, 1.4)}</g>`;
   return svg(size, size, `${-inset} ${-inset} ${vb} ${vb}`, body, "Chumbuo");
 }
